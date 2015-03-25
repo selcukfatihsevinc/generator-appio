@@ -1,0 +1,10 @@
+{
+  "transport": "Console",
+  "options": {
+    "level": "debug",
+    "handleExceptions": true,
+    "json": false,
+    "colorize": false,
+    "prettyPrint": true
+  }
+}

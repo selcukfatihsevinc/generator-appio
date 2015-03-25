@@ -1,0 +1,6 @@
+{
+  "enabled": false,
+  "host": "localhost",
+  "port": 8983,
+  "core": "solrcore"
+}

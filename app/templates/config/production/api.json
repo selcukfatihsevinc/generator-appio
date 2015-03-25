@@ -1,0 +1,17 @@
+{
+    "query": {
+        "lean": true
+    },
+    "token": {
+        "secret": "<%= tokenSecret %>",
+        "expires": 60
+    },
+    "admin": {
+        "user": {
+            "name": "Super Admin",
+            "email": "super@admin.com",
+            "password": "<%= adminPass %>",
+            "type": "A"
+        }
+    }
+}

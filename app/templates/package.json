@@ -1,0 +1,24 @@
+{
+    "name": "<%= appSlug %>",
+    "description": "<%= appDesc %>",
+    "version": "0.0.1",
+    "author": {
+        "name": "name",
+        "email": "email"
+    },
+    "engine": "node >= 0.10.*",
+    "readmeFilename": "README.md",
+    "keywords": [],
+    "dependencies": {
+        "app.io": "0.0.9",
+        "async": "0.9.0",
+        "underscore": "1.7.0",
+        "underscore.string": "3.0.3",
+        "dotty": "0.0.2",
+        "flightplan": "0.5.6",
+        "swig": "1.4.2",
+        "mkdirp": "0.5.0",
+        "i18n": "0.5.0",
+        "git-rev-sync": "1.0.0"
+    }
+}

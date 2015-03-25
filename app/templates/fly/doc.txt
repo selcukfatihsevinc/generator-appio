@@ -1,0 +1,15 @@
+APP=<%= appSlug %> fly apt#setup:production // install apt packages
+APP=<%= appSlug %> fly nvm#setup:production // install node.js
+APP=<%= appSlug %> fly app#setup:production // clone app repo and install npm packages
+APP=<%= appSlug %> fly app#deploy:production // pull app repo
+APP=<%= appSlug %> fly redis#setup:production // install redis (redis.conf içine şifreyi gir)
+APP=<%= appSlug %> fly upstart#redis:production // generate redis upstart conf file
+APP=<%= appSlug %> fly upstart#app:production // generate upstart conf files
+APP=<%= appSlug %> fly upstart#load:production // load upstart files to remote server
+APP=<%= appSlug %> fly mongodb#setup:production // install mongodb
+APP=<%= appSlug %> fly mongodb#start:production // start mongodb service
+APP=<%= appSlug %> fly mongodb#stop:production // stop mongodb service
+APP=<%= appSlug %> fly mongodb#restart:production // restart mongodb service
+APP=<%= appSlug %> fly start:production // start upstart service
+APP=<%= appSlug %> fly stop:production // stop upstart service
+APP=<%= appSlug %> fly restart:production // restart upstart service

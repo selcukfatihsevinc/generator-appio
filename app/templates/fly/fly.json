@@ -1,0 +1,33 @@
+{
+  "repo": {
+    "name" : "repo-name",
+    "url"  : "repo-url"
+  },
+  "node": "0.10.33",
+  "redis": "2.8.17",
+  "targets": {
+    "development": {
+
+    },
+    "production": {
+      "host"       : "host",
+      "username"   : "user",
+      "privateKey" : "private key path"
+    }
+  },
+  "upstart": {
+    "name": "<%= appSlug %>",
+    "description": "<%= appDesc %>",
+    "author": "author name",
+    "instances": {
+      "app": {
+        "nodedir": "/root",
+        "exec": "app.js",
+        "env": {
+          "NODE_APP": "app",
+          "NODE_PORT": 80
+        }
+      }
+    }
+  }
+}

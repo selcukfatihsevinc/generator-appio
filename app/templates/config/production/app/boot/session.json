@@ -1,0 +1,9 @@
+{
+  "name": "<%= appSlug %>.sid",
+  "secret": "<%= sessionSecret %>",
+  "cookie": {
+    "maxAge": 5184000
+  },
+  "resave": false,
+  "saveUninitialized": true
+}
