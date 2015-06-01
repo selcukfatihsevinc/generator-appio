@@ -102,16 +102,18 @@ module.exports = yeoman.generators.Base.extend({
         }
       );
 
+      this.mkdir('lib');
       this.mkdir('model');
       this.fs.copy( this.templatePath('public'), this.destinationPath('public') );
       this.mkdir('route');
       this.mkdir('upstart/generated/'+this.appSlug);
       this.fs.copy( this.templatePath('upstart/template'), this.destinationPath('upstart/template') );
-      this.mkdir('view');
+      this.fs.copy( this.templatePath('view'), this.destinationPath('view') );
       this.mkdir('worker');
       this.fs.copy( this.templatePath('app.js'), this.destinationPath('app.js') );
       this.fs.copy( this.templatePath('flightplan.js'), this.destinationPath('flightplan.js') );
       this.fs.copy( this.templatePath('gitignore'), this.destinationPath('.gitignore') );
+      this.fs.copy( this.templatePath('newrelic.js'), this.destinationPath('newrelic.js') );
 
       this.fs.copyTpl(
         this.templatePath('package.json'),

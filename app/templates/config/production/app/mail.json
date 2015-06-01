@@ -1,0 +1,17 @@
+{
+  "app slug": {
+    "baseUrl": "http://baseurl/",
+    "endpoints": {
+      "reset": "reset",
+      "invite": "invite"
+    },
+    "reset": {
+      "from": "App Name <app@app.com>",
+      "subject": "Reset Password"
+    },
+    "invite": {
+      "from": "App Name <app@app.com>",
+      "subject": "App Invitation"
+    }
+  }
+}

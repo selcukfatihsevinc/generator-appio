@@ -6,6 +6,7 @@ node_modules/*
 # -----------------------------------------------
 
 npm-debug.log
+newrelic_agent.log
 
 # Created by https://www.gitignore.io
 

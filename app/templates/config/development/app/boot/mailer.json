@@ -1,0 +1,7 @@
+{
+  "service": "Mandrill",
+  "auth": {
+    "user": "mandrill user",
+    "pass": "mandrill pass"
+  }
+}

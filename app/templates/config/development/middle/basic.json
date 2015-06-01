@@ -1,5 +1,5 @@
 {
   "enabled": true,
-  "user": "<%= appSlug %>",
-  "pass": "<%= appSlug %>"
+  "user": "app.io",
+  "pass": "app.io"
 }

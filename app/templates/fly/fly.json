@@ -12,7 +12,8 @@
     "production": {
       "host"       : "host",
       "username"   : "user",
-      "privateKey" : "private key path"
+      "privateKey" : "private key path",
+      "newrelic"   : "newrelic licence key"
     }
   },
   "upstart": {

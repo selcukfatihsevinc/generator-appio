@@ -130,6 +130,14 @@ plan.remote('mongodb#setup', function(remote) {
     remote.sudo('apt-get install -y mongodb-org');
 });
 
+// mongodb3 setup
+plan.remote('mongodb3#setup', function(remote) {
+  remote.sudo('apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10');
+  remote.exec("echo 'deb http://repo.mongodb.org/apt/ubuntu '$(lsb_release -sc)'/mongodb-org/3.0 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list");
+  remote.sudo('apt-get update');
+  remote.sudo('apt-get install -y mongodb-org');
+});
+
 // mongodb setup
 plan.remote('mongodb#start', function(remote) {
     remote.sudo('service mongod start');
@@ -226,7 +234,28 @@ plan.remote('restart', function(remote) {
     remote.sudo('restart '+input);
 });
 
+// new relic setup
+plan.remote('newrelic#setup', function(remote) {
+  var target = plan.runtime.target;
 
+  remote.exec('echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list');
+  remote.exec('wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -');
+  remote.sudo('apt-get update');
+  remote.sudo('apt-get install -y newrelic-sysmond');
+  remote.exec('nrsysmond-config --set license_key='+conf.targets[target].newrelic);
+});
+
+plan.remote('newrelic#start', function(remote) {
+  remote.sudo('/etc/init.d/newrelic-sysmond start');
+});
+
+plan.remote('newrelic#stop', function(remote) {
+  remote.sudo('/etc/init.d/newrelic-sysmond stop');
+});
+
+plan.remote('newrelic#restart', function(remote) {
+  remote.sudo('/etc/init.d/newrelic-sysmond restart');
+});
 
 
 

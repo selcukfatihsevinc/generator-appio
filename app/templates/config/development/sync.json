@@ -1,0 +1,18 @@
+{
+  "data": {
+    "apps": false,
+    "roles": false,
+    "objects": false,
+    "superadmin": false,
+    "actions": false
+  },
+  "random": {
+    "model_name": false
+  },
+  "denormalize": {
+    "model_name": false
+  },
+  "index": {
+    "model_name": false
+  }
+}

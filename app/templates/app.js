@@ -1,17 +1,19 @@
+// newrelic
+if(process.env.NODE_RELIC) {
+  console.log('init newrelic');
+  require('newrelic');
+}
+
 var AppIo = require('app.io');
+var app   = new AppIo({basedir: __dirname});
 
-var app = new AppIo({
-    basedir: __dirname
-});
-
+// process
 process.env.TZ = 'UTC';
 
-var _env = app.get('env');
-
-app.external('config/'+_env);
+app.external('config/'+app.get('env'));
 app.load('system/logger');
 app.load('core', ['mongo', 'redis']);
-// app.load('core', ['solr', 'cache']); // other core options
+// app.load('core', ['solr', 'elasticsearch', 'cache', 'db']); // other core options
 app.load('lib');
 // load external libs here
 app.load('model');
@@ -30,10 +32,15 @@ app.load('boot', [
     'config',
     'admin/redirect',
     'cron',
-    'env',
-    'x-powered-by',
-    'kue',
-    'kue-ui'
+    'x-powered-by'
+    // 'kue',
+    // 'kue-ui',
+    // 'mailer',
+    // 'oauthproxy',
+    // 'cors',
+    // 'override',
+    // 'socketauth',
+    // 'env'
 ]);
 // external boot files
 // external worker files
