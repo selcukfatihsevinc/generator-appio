@@ -40,12 +40,12 @@ plan.remote('apt#setup', function(remote) {
 
 // node.js setup
 plan.remote('nvm#setup', function(remote) {
-    remote.exec('curl https://raw.githubusercontent.com/creationix/nvm/v0.19.0/install.sh | bash');
+    remote.exec('curl https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash');
 
     remote.with('source ~/.nvm/nvm.sh', function() {
         remote.exec('nvm install '+conf.node);
         remote.log('node.js installed version:');
-        remote.exec('~/.nvm/v'+conf.node+'/bin/node -v');
+        remote.exec('~/.nvm/versions/node/v'+conf.node+'/bin/node -v');
     });
 });
 
@@ -59,7 +59,7 @@ plan.remote('app#setup', function(remote) {
             remote.git('clone '+conf.repo.url);
 
             remote.with('cd '+repodir, function() {
-                remote.exec('~/.nvm/v'+conf.node+'/bin/npm install');
+              remote.exec('~/.nvm/versions/node/v'+conf.node+'/bin/npm install');
             });
         });
     });
@@ -137,6 +137,7 @@ plan.remote('mongodb3#setup', function(remote) {
   remote.sudo('apt-get update');
   remote.sudo('apt-get install -y mongodb-org');
 });
+
 
 // mongodb setup
 plan.remote('mongodb#start', function(remote) {
