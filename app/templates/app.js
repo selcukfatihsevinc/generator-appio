@@ -17,8 +17,12 @@ app.load('core', ['mongo', 'redis']);
 // app.load('core', ['solr', 'elasticsearch', 'cache', 'db']); // other core options
 app.load('lib');
 // load external libs here
-app.load('model');
-// load external models here
+
+app.load('model/acl');
+app.load('model/oauth');
+app.load('model/system');
+app.external('model');
+
 app.load('middle');
 app.load('boot', [
     'view',
