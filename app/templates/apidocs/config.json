@@ -1,0 +1,27 @@
+{
+  "appslug": {
+    "name": "App Name",
+    "env": {
+      "development": {
+        "apidocs": {
+          "name": "App Name",
+          "env": "Development",
+          "collection": "App Name Development",
+          "baseurl": "127.0.0.1",
+          "client_id": "",
+          "client_secret": ""
+        }
+      },
+      "production": {
+        "apidocs": {
+          "name": "App Name",
+          "env": "Production",
+          "collection": "App Name Production",
+          "baseurl": "127.0.0.1",
+          "client_id": "",
+          "client_secret": ""
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ var app   = new AppIo({basedir: __dirname});
 process.env.TZ = 'UTC';
 
 app.external('config/'+app.get('env'));
+app.external('apidocs');
 app.load('system/logger');
 app.load('core', ['mongo', 'redis']);
 // app.load('core', ['solr', 'elasticsearch', 'cache', 'db']); // other core options
@@ -33,14 +34,14 @@ app.load('boot', [
     'admin/redirect',
     'cron',
     'x-powered-by'
+    // 'env',
+    // 'cors',
+    // 'mailer',
     // 'kue',
     // 'kue-ui',
-    // 'mailer',
     // 'oauthproxy',
-    // 'cors',
     // 'override',
-    // 'socketauth',
-    // 'env'
+    // 'socketauth'
 ]);
 // external boot files
 // external worker files

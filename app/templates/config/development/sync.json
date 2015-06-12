@@ -4,7 +4,8 @@
     "roles": false,
     "objects": false,
     "superadmin": false,
-    "actions": false
+    "actions": false,
+    "docs": false
   },
   "random": {
     "model_name": false

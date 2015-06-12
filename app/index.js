@@ -81,6 +81,7 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     app: function () {
+      this.fs.copyTpl( this.templatePath('apidocs'), this.destinationPath('apidocs') );
       this.fs.copyTpl( this.templatePath('boot'), this.destinationPath('boot') );
 
       this.mkdir('config/staging');
