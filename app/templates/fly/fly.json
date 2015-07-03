@@ -24,6 +24,7 @@
       "app": {
         "nodedir": "/root",
         "exec": "app.js",
+        "worker": "workers.js",
         "env": {
           "NODE_APP": "app",
           "NODE_PORT": 80

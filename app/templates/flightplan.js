@@ -194,6 +194,42 @@ plan.local('upstart#app', function(local) {
   }
 });
 
+// upstart setup
+plan.local('upstart#worker', function(local) {
+  try {
+    var upstart  = conf.upstart;
+    var tpl      = swig.compileFile('./upstart/template/worker-template.conf');
+    var target   = plan.runtime.target;
+    var writeDir = __dirname+'/upstart/generated/'+upstart.name+'/'+target;
+
+    mkdirp(writeDir, function (err) {
+      if (err)
+        return local.log(err);
+
+      _.each(upstart.instances, function(value, key) {
+        var name = upstart.name+'-worker';
+        var str  = tpl({
+          name       : name,
+          nodeenv    : plan.runtime.target,
+          nodeapp    : value.env.NODE_APP,
+          nodedir    : value.nodedir,
+          fulldir    : fulldir,
+          node       : conf.node,
+          worker     : value.worker,
+          nvmInstall : nvmInstall
+        });
+
+        fs.writeFile(writeDir+'/'+name+'.conf', str, function(err) {
+          local.log(err || 'upstart config generated');
+        });
+      });
+    });
+  }
+  catch(e) {
+    local.log(e);
+  }
+});
+
 plan.local('upstart#load', function(local) {
   local.log('copy upstart files to remote host /tmp/upstart folder');
   var target = plan.runtime.target;
@@ -208,6 +244,7 @@ plan.local('upstart#load', function(local) {
 plan.remote('upstart#load', function(remote) {
   remote.log('copy upstart files to remote host /etc/init folder');
 
+  remote.sudo('mkdir -p /tmp/upstart');
   remote.with('cd /tmp/upstart', function() {
     remote.sudo('cp * /etc/init');
   });

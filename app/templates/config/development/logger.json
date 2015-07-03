@@ -2,9 +2,12 @@
   "transport": "Console",
   "options": {
     "level": "debug",
+    "humanReadableUnhandledException": true,
     "handleExceptions": true,
     "json": false,
-    "colorize": true,
-    "prettyPrint": true
+    "colorize": false,
+    "prettyPrint": false,
+    "showLevel": false,
+    "timestamp": false
   }
 }
