@@ -52,6 +52,7 @@ plan.remote('nvm#setup', function(remote) {
     remote.exec('nvm install '+conf.node);
     remote.log('node.js installed version:');
     remote.exec('~/.nvm/'+nvmInstall+'v'+conf.node+'/bin/node -v');
+    remote.exec('sudo ln -s ~/.nvm/'+nvmInstall+'v'+conf.node+'/bin/node /usr/bin/node');
   });
 });
 
@@ -75,6 +76,12 @@ plan.remote('app#deploy', function(remote) {
   remote.with('cd '+fulldir, function() {
     remote.git('pull origin master');
     remote.exec('~/.nvm/'+nvmInstall+'/v'+conf.node+'/bin/npm install'); // install new npm packages
+  });
+});
+
+plan.remote('app#resizer', function(remote) {
+  remote.with('cd '+fulldir+'node_modules/app.io/', function() {
+    remote.exec('~/.nvm/'+nvmInstall+'v'+conf.node+'/bin/npm install image-resizer');
   });
 });
 
@@ -301,6 +308,67 @@ plan.remote('newrelic#restart', function(remote) {
   remote.sudo('/etc/init.d/newrelic-sysmond restart');
 });
 
+// gerekli java paketlerini kur
+plan.remote('java#setup', function(remote) {
+  // -y : onay beklemeden kurması için
+  remote.sudo('apt-get update');
+  remote.sudo('apt-get -y install openjdk-7-jre-headless');
+});
+
+// elasticsearch setup
+plan.remote('elastic#setup', function(remote) {
+  var target = plan.runtime.target;
+
+  remote.with('cd /'+basedir, function() {
+    remote.sudo('mkdir -p '+dbdir);
+    remote.sudo('chmod -R 777 '+dbdir);
+
+    remote.with('cd '+dbdir, function() {
+      remote.exec('wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-'+conf.elastic+'.tar.gz');
+      remote.exec('tar xzf elasticsearch-'+conf.elastic+'.tar.gz');
+    });
+  });
+});
+
+// elasticsearch http-basic
+plan.remote('elastichttp#setup', function(remote) {
+  var target = plan.runtime.target;
+
+  remote.with('cd /'+basedir+'/'+dbdir+'/elasticsearch-'+conf.elastic+'/plugins', function() {
+    remote.sudo('mkdir http-basic');
+
+    remote.with('cd http-basic', function() {
+      remote.exec('wget https://github.com/Asquera/elasticsearch-http-basic/releases/download/v1.5.0/elasticsearch-http-basic-1.5.0.jar');
+    })
+  });
+});
+
+// elastic upstart setup
+plan.local('upstart#elastic', function(local) {
+  try {
+    var tpl    = swig.compileFile('./upstart/template/elastic-template.conf');
+    var target = plan.runtime.target;
+
+    var str = tpl({
+      name    : 'elastic',
+      fulldir : '/'+basedir+'/'+dbdir+'/elasticsearch-'+conf.elastic+'/bin'
+    });
+
+    var writeDir = __dirname+'/upstart/generated/'+conf.upstart.name+'/'+target;
+
+    mkdirp(writeDir, function (err) {
+      if (err)
+        return local.log(err);
+
+      fs.writeFile(writeDir+'/elastic.conf', str, function(err) {
+        local.log(err || 'elasticsearch upstart config generated');
+      });
+    });
+  }
+  catch(e) {
+    local.log(e);
+  }
+});
 
 
 

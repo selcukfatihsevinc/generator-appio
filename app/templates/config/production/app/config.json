@@ -1,1 +1,12 @@
-{}
+{
+  "upload": {
+    "type": "s3",
+    "dir": "public/upload",
+    "account": {
+      "key": "s3 key",
+      "secret": "s3 secret"
+    },
+    "bucket": "s3 bucket",
+    "folder": "s3 folder"
+  }
+}

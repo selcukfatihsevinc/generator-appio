@@ -5,6 +5,7 @@
     "objects": false,
     "superadmin": false,
     "actions": false,
+    "userroles": false,
     "docs": false
   },
   "random": {
