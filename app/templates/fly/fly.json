@@ -4,7 +4,7 @@
     "url"  : "repo-url"
   },
   "node": "0.10.33",
-  "redis": "2.8.17",
+  "redis": "3.0.1",
   "targets": {
     "development": {
 
