@@ -3,5 +3,8 @@
     "port": 27017,
     "db": "<%= appSlug %>",
     "user": "<%= appSlug %>",
-    "pass": "<%= appSlug %>"
+    "pass": "<%= appSlug %>",
+    "pool": 10,
+    "autoIndex": true,
+    "debug": true
 }

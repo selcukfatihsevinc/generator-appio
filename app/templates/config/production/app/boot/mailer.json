@@ -3,5 +3,6 @@
   "auth": {
     "user": "mandrill user",
     "pass": "mandrill pass"
-  }
+  },
+  "socketTimeout": 60000
 }

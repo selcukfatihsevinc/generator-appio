@@ -1,9 +1,11 @@
 {
   "app slug": {
     "baseUrl": "http://baseurl/",
+    "domains": [],
     "endpoints": {
       "reset": "reset",
-      "invite": "invite"
+      "invite": "invite",
+      "register": "verify"
     },
     "reset": {
       "from": "App Name <app@app.com>",
@@ -12,6 +14,10 @@
     "invite": {
       "from": "App Name <app@app.com>",
       "subject": "App Invitation"
+    },
+    "register": {
+      "from": "App Name <app@app.com>",
+      "subject": "App Register"
     }
   }
 }

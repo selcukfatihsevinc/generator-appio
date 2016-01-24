@@ -6,7 +6,9 @@
     "superadmin": false,
     "actions": false,
     "userroles": false,
-    "docs": false
+    "docs": false,
+    "superacl": false,
+    "core": false
   },
   "random": {
     "model_name": false

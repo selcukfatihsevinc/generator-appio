@@ -104,6 +104,7 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.mkdir('lib');
+      this.mkdir('libpost');
       this.mkdir('model');
       this.fs.copy( this.templatePath('public'), this.destinationPath('public') );
       this.mkdir('route');

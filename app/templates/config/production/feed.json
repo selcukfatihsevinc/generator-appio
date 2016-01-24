@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "cron": {
+    "interval": "0 * * * * *"
+  },
+  "readability": true
+}
