@@ -1,9 +1,0 @@
-{
-  "urlencoded": {
-    "extended": true,
-    "limit": "16mb"
-  },
-  "json": {
-    "limit": "16mb"
-  }
-}

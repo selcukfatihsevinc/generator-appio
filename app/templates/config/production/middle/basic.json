@@ -1,5 +1,0 @@
-{
-  "enabled": true,
-  "user": "<%= appSlug %>",
-  "pass": "<%= basicSecret %>"
-}

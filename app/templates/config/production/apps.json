@@ -1,6 +1,0 @@
-{
-  "list": [
-    {"name": "System", "slug": "system", "long": "System"},
-    {"name": "<%= appName %>", "slug": "<%= appSlug %>", "long": "<%= appDesc %>"}
-  ]
-}

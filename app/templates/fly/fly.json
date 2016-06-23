@@ -3,8 +3,8 @@
     "name" : "repo-name",
     "url"  : "repo-url"
   },
-  "node": "0.10.33",
-  "redis": "3.0.1",
+  "node": "0.12.7",
+  "redis": "3.2.1",
   "targets": {
     "development": {
 

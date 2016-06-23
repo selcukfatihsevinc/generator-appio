@@ -1,27 +1,27 @@
 // install apt packages
-APP=<%= appSlug %> fly apt#setup:<target>
+fly apt#setup:<target>
 
 // app setup
-APP=<%= appSlug %> fly nvm#setup:<target> // install node.js
-APP=<%= appSlug %> fly app#setup:<target> // clone app repo and install npm packages
+fly nvm#setup:<target> // install node.js
+fly app#setup:<target> // clone app repo and install npm packages
 
 // app deploy
-APP=<%= appSlug %> fly app#deploy:<target> // pull app repo
+fly app#deploy:<target> // pull app repo
 
 // redis, mongodb setup
-APP=<%= appSlug %> fly redis#setup:<target> // install redis (redis.conf içine şifreyi gir)
-APP=<%= appSlug %> fly mongodb#setup:<target> // install mongodb
-APP=<%= appSlug %> fly mongodb#start:<target> // start mongodb service
-APP=<%= appSlug %> fly mongodb#stop:<target> // stop mongodb service
-APP=<%= appSlug %> fly mongodb#restart:<target> // restart mongodb service
+fly redis#setup:<target> // install redis (redis.conf içine şifreyi gir)
+fly mongodb#setup:<target> // install mongodb
+fly mongodb#start:<target> // start mongodb service
+fly mongodb#stop:<target> // stop mongodb service
+fly mongodb#restart:<target> // restart mongodb service
 
 // upstart files
-APP=<%= appSlug %> fly upstart#redis:<target> // generate redis upstart conf file
-APP=<%= appSlug %> fly upstart#app:<target> // generate upstart conf files
-APP=<%= appSlug %> fly upstart#load:<target> // load upstart files to remote server
+fly upstart#redis:<target> // generate redis upstart conf file
+fly upstart#app:<target> // generate upstart conf files
+fly upstart#load:<target> // load upstart files to remote server
 
 // service actions
-APP=<%= appSlug %> fly start:<target> // start upstart service
-APP=<%= appSlug %> fly stop:<target> // stop upstart service
-APP=<%= appSlug %> fly restart:<target> // restart upstart service
+fly start:<target> // start upstart service
+fly stop:<target> // stop upstart service
+fly restart:<target> // restart upstart service
 

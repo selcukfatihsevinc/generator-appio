@@ -10,16 +10,16 @@
     "readmeFilename": "README.md",
     "keywords": [],
     "dependencies": {
-        "app.io": "0.2.36",
-        "async": "0.9.0",
-        "underscore": "1.7.0",
-        "underscore.string": "3.0.3",
+        "app.io": "1.0.7",
+        "async": "2.0.0-rc.6",
+        "underscore": "1.8.3",
+        "underscore.string": "3.3.4",
         "dotty": "0.0.2",
         "flightplan": "0.5.6",
         "swig": "1.4.2",
-        "mkdirp": "0.5.0",
-        "i18n": "0.5.0",
-        "git-rev-sync": "1.0.0",
-        "newrelic": "1.18.2"
+        "mkdirp": "0.5.1",
+        "i18n": "0.8.3",
+        "git-rev-sync": "1.6.0",
+        "newrelic": "1.28.1"
     }
 }

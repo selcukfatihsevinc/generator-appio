@@ -50,8 +50,8 @@ module.exports = yeoman.generators.Base.extend({
   writing: {
     dev: function() {
       this.fs.copyTpl(
-        this.templatePath('config/development'),
-        this.destinationPath('config/development'),
+        this.templatePath('config/development.js'),
+        this.destinationPath('config/development.js'),
         {
           appName: this.appName,
           appSlug: this.appSlug,
@@ -64,8 +64,8 @@ module.exports = yeoman.generators.Base.extend({
 
     prod: function() {
       this.fs.copyTpl(
-        this.templatePath('config/production'),
-        this.destinationPath('config/production'),
+        this.templatePath('config/production.js'),
+        this.destinationPath('config/production.js'),
         {
           appName: this.appName,
           appSlug: this.appSlug,
@@ -84,9 +84,6 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl( this.templatePath('apidocs'), this.destinationPath('apidocs') );
       this.fs.copyTpl( this.templatePath('boot'), this.destinationPath('boot') );
 
-      this.mkdir('config/staging');
-      this.mkdir('config/testing');
-
       this.fs.copyTpl(
         this.templatePath('fly/doc.txt'),
         this.destinationPath('fly/doc.txt'),
@@ -104,7 +101,6 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.mkdir('lib');
-      this.mkdir('libpost');
       this.mkdir('model');
       this.fs.copy( this.templatePath('public'), this.destinationPath('public') );
       this.mkdir('route');
@@ -113,7 +109,7 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copy( this.templatePath('view'), this.destinationPath('view') );
       this.mkdir('worker');
       this.fs.copy( this.templatePath('app.js'), this.destinationPath('app.js') );
-      this.fs.copy( this.templatePath('flightplan.js'), this.destinationPath('flightplan.js') );
+      this.fs.copyTpl( this.templatePath('flightplan.js'), this.destinationPath('flightplan.js'), {appSlug: this.appSlug});
       this.fs.copy( this.templatePath('gitignore'), this.destinationPath('.gitignore') );
       this.fs.copy( this.templatePath('newrelic.js'), this.destinationPath('newrelic.js') );
 

@@ -4,8 +4,14 @@ var swig   = require('swig');
 var _      = require('underscore');
 var mkdirp = require('mkdirp');
 
+/**
+ * ----------------------------------------------------------------
+ * Init
+ * ----------------------------------------------------------------
+ */
+
 try {
-  var app  = process.env.APP;
+  var app  = process.env.APP || '<%= appSlug %>';
   var conf = require('./fly/'+app+'.json');
 
   _.each(conf.targets, function(value, key) {
@@ -31,12 +37,22 @@ catch(e) {
   console.log(e);
 }
 
-// test
+/**
+ * ----------------------------------------------------------------
+ * Remote Test
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('test', function(remote) {
   remote.cd('/home');
 });
 
-// gerekli apt paketlerini kur
+/**
+ * ----------------------------------------------------------------
+ * Apt Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('apt#setup', function(remote) {
   // -y : onay beklemeden kurması için
   remote.sudo('apt-get update');
@@ -44,7 +60,12 @@ plan.remote('apt#setup', function(remote) {
   remote.sudo('apt-get -y install git');
 });
 
-// node.js setup
+/**
+ * ----------------------------------------------------------------
+ * Node.js Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('nvm#setup', function(remote) {
   remote.exec('curl https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash');
 
@@ -56,7 +77,12 @@ plan.remote('nvm#setup', function(remote) {
   });
 });
 
-// application setup
+/**
+ * ----------------------------------------------------------------
+ * Application Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('app#setup', function(remote) {
   remote.with('cd /'+basedir, function() {
     remote.sudo('mkdir -p '+appdir);
@@ -86,11 +112,11 @@ plan.remote('app#resizer', function(remote) {
 });
 
 /**
- * @TODO
- * redis config'i template olarak durabilir, password vs eklenip upload edilir
+ * ----------------------------------------------------------------
+ * Redis Setup
+ * ----------------------------------------------------------------
  */
 
-// redis setup
 plan.remote('redis#setup', function(remote) {
   remote.with('cd /'+basedir, function() {
     remote.sudo('mkdir -p '+dbdir);
@@ -108,7 +134,12 @@ plan.remote('redis#setup', function(remote) {
   });
 });
 
-// redis upstart setup
+/**
+ * ----------------------------------------------------------------
+ * Redis Upstart Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.local('upstart#redis', function(local) {
   try {
     var tpl    = swig.compileFile('./upstart/template/redis-template.conf');
@@ -135,7 +166,12 @@ plan.local('upstart#redis', function(local) {
   }
 });
 
-// mongodb setup
+/**
+ * ----------------------------------------------------------------
+ * Mongodb Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('mongodb#setup', function(remote) {
   remote.sudo('apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10');
   remote.exec("echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list");
@@ -143,7 +179,12 @@ plan.remote('mongodb#setup', function(remote) {
   remote.sudo('apt-get install -y mongodb-org');
 });
 
-// mongodb3 setup
+/**
+ * ----------------------------------------------------------------
+ * Mongodb 3 Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('mongodb3#setup', function(remote) {
   remote.sudo('apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10');
   remote.exec("echo 'deb http://repo.mongodb.org/apt/ubuntu '$(lsb_release -sc)'/mongodb-org/3.0 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list");
@@ -151,7 +192,12 @@ plan.remote('mongodb3#setup', function(remote) {
   remote.sudo('apt-get install -y mongodb-org');
 });
 
-// mongodb setup
+/**
+ * ----------------------------------------------------------------
+ * Mongodb Services
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('mongodb#start', function(remote) {
   remote.sudo('service mongod start');
 });
@@ -164,7 +210,12 @@ plan.remote('mongodb#restart', function(remote) {
   remote.sudo('service mongod restart');
 });
 
-// upstart setup
+/**
+ * ----------------------------------------------------------------
+ * Upstart App Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.local('upstart#app', function(local) {
   try {
     var upstart  = conf.upstart;
@@ -201,7 +252,12 @@ plan.local('upstart#app', function(local) {
   }
 });
 
-// upstart setup
+/**
+ * ----------------------------------------------------------------
+ * Upstart Worker Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.local('upstart#worker', function(local) {
   try {
     var upstart  = conf.upstart;
@@ -237,6 +293,12 @@ plan.local('upstart#worker', function(local) {
   }
 });
 
+/**
+ * ----------------------------------------------------------------
+ * Upstart Load
+ * ----------------------------------------------------------------
+ */
+
 plan.local('upstart#load', function(local) {
   local.log('copy upstart files to remote host /tmp/upstart folder');
   var target = plan.runtime.target;
@@ -257,7 +319,12 @@ plan.remote('upstart#load', function(remote) {
   });
 });
 
-// service actions
+/**
+ * ----------------------------------------------------------------
+ * Service Actions (start, stop, restart)
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('start', function(remote) {
   var input = remote.prompt('write service name:');
 
@@ -285,7 +352,12 @@ plan.remote('restart', function(remote) {
   remote.sudo('restart '+input);
 });
 
-// new relic setup
+/**
+ * ----------------------------------------------------------------
+ * New Relic Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('newrelic#setup', function(remote) {
   var target = plan.runtime.target;
 
@@ -308,14 +380,24 @@ plan.remote('newrelic#restart', function(remote) {
   remote.sudo('/etc/init.d/newrelic-sysmond restart');
 });
 
-// gerekli java paketlerini kur
+/**
+ * ----------------------------------------------------------------
+ * Java Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('java#setup', function(remote) {
   // -y : onay beklemeden kurması için
   remote.sudo('apt-get update');
   remote.sudo('apt-get -y install openjdk-7-jre-headless');
 });
 
-// elasticsearch setup
+/**
+ * ----------------------------------------------------------------
+ * Elasticsearch Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('elastic#setup', function(remote) {
   var target = plan.runtime.target;
 
@@ -330,7 +412,12 @@ plan.remote('elastic#setup', function(remote) {
   });
 });
 
-// elasticsearch http-basic
+/**
+ * ----------------------------------------------------------------
+ * Elasticsearch http-basic Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.remote('elastichttp#setup', function(remote) {
   var target = plan.runtime.target;
 
@@ -343,7 +430,12 @@ plan.remote('elastichttp#setup', function(remote) {
   });
 });
 
-// elastic upstart setup
+/**
+ * ----------------------------------------------------------------
+ * Elasticsearch Upstart Setup
+ * ----------------------------------------------------------------
+ */
+
 plan.local('upstart#elastic', function(local) {
   try {
     var tpl    = swig.compileFile('./upstart/template/elastic-template.conf');
