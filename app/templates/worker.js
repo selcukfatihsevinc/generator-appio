@@ -1,8 +1,5 @@
 var AppIo = require('app.io');
-
-new AppIo({
-  basedir: __dirname
-}).workers();
+new AppIo({basedir: __dirname}).workers();
 
 
 
