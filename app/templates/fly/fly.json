@@ -3,7 +3,7 @@
     "name" : "repo-name",
     "url"  : "repo-url"
   },
-  "node": "0.12.7",
+  "node": "6.3.0",
   "redis": "3.2.1",
   "targets": {
     "development": {
